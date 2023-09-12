@@ -7,6 +7,9 @@ import authRoutes from "./routes/authRoute.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import cors from "cors";
+import cloudinaryConnect from "./config/cloudinary.js"
+
+import fileUpload from "express-fileupload";
 
 //configure env
 dotenv.config();
@@ -17,10 +20,24 @@ connectDB();
 //rest object
 const app = express();
 
-//middelwares
-app.use(cors());
+//middlewares
+app.use(
+	cors({
+		origin: "*",
+		credentials: true,
+	})
+);
 app.use(express.json());
 app.use(morgan("dev"));
+app.use(
+	fileUpload({
+		useTempFiles: true,
+		tempFileDir: "/tmp/",
+	})
+);
+
+// Connecting to cloudinary
+cloudinaryConnect();
 
 //routes
 app.use("/api/v1/auth", authRoutes);

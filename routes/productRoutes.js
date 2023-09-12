@@ -20,12 +20,11 @@ import formidable from "express-formidable";
 
 const router = express.Router();
 
-//routes
+//routescreateProductController
 router.post(
   "/create-product",
   requireSignIn,
   isAdmin,
-  formidable(),
   createProductController
 );
 //routes
